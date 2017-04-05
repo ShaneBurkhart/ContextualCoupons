@@ -45,7 +45,7 @@ watch-assets:
 	docker-compose -f docker-compose.dev.yml run app gulp watch
 
 deploy:
-	ssh -A ubuntu@35.167.77.85 'cd ~/SparkSchool; git pull origin master; ./deploy/prod.sh'
+	#ssh -A ubuntu@35.167.77.85 'cd ~/SparkSchool; git pull origin master; ./deploy/prod.sh'
 
 # Ping google with new sitemap
 ping_google:
