@@ -45,15 +45,22 @@ var User = {
     // Symbol list: ~`!@#$%^&*()+=_-{}[]\|:;”’?/<>,.
   },
 
-  create: function (user, type, callback) {
+  hashPassword: function (password, callback) {
+      bcrypt.hash(password, SALT_ROUNDS, function (err, hash) {
+        if (err) return callback('Sorry, there was an error. Try again later.');
+        callback(undefined, hash);
+      });
+  },
+
+  create: function (user, callback) {
     this.validate(user, function (err) {
       if (err) return callback(err);
 
       var passwordError = User.validatePassword(user.password);
       if (passwordError) return callback(passwordError);
 
-      bcrypt.hash(user.password, SALT_ROUNDS, function (err, hash) {
-        if (err) return callback('Sorry, there was an error. Try again later.');
+      User.hashPassword(user.password, function (err, hash) {
+        if (err) return callback(err);
 
         var params = [user.email, hash];
 
@@ -80,13 +87,15 @@ var User = {
 
   findById: function (id, callback) {
     db.query(FIND_BY_ID_QUERY, [id], function (err, results) {
-      callback(err, results.rows[0]);
+      if (err) return callback(err);
+      callback(undefined, results.rows[0]);
     });
   },
 
   findByEmail: function (email, callback) {
     db.query(FIND_BY_EMAIL_QUERY, [email], function (err, results) {
-      callback(err, results.rows[0]);
+      if (err) return callback(err);
+      callback(undefined, results.rows[0]);
     });
   },
 };

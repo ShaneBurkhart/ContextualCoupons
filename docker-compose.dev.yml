@@ -19,8 +19,8 @@ services:
         image: postgres:9.6
         environment:
             POSTGRES_PASSWORD: password
-            POSTGRES_USER: sparkschool
-            POSTGRES_DB: sparkschool
+            POSTGRES_USER: paymentsapp
+            POSTGRES_DB: paymentsapp
         volumes:
             - ./tmp/db:/var/lib/postgresql/data
         ports:

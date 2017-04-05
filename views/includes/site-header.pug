@@ -1,13 +1,9 @@
 header
     .container
         nav.pull-left
-            a#site-logo(href="/") Spark School
+            a#site-logo(href="/") Payments App
         nav#main-nav
             block main_nav
-                if currentUser
-                    a.button(href="/courses") Courses
-                    form(action="/user/session/destroy" method="POST")
-                        button Logout
-                else
-                    a.button(href="/signup") Sign Up
-                    a(href="/login") Login
+                a.button(href="/dashboard") Dashboard
+                form(action="/user/session/destroy" method="POST")
+                    button Logout

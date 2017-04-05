@@ -31,7 +31,7 @@ module.exports = function (app) {
 
       login(res, user.id);
 
-      return res.redirect(redirectUrl || '/courses');
+      return res.redirect(redirectUrl || '/dashboard');
     });
   });
 

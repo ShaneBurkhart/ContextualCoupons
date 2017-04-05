@@ -5,7 +5,7 @@ block variables
 
 block content
     - user = user || {}
-    h1.text-center Spark School
+    h1.text-center Payments App
 
     if error
         p.error
@@ -20,7 +20,3 @@ block content
             label(for='password') Password
             input#password(type='password' name='password' placeholder='********')
         button Login
-
-    #alternative-signup
-        p or
-        a(href='/signup')  Sign Up
