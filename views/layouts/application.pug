@@ -1,0 +1,18 @@
+doctype html
+html
+    head
+        include ../includes/head
+        block head
+
+    body#application
+        include ../includes/site-header
+
+        main
+            block no_hero
+                .hero
+                    .container
+                        block hero
+            .container
+                block content
+
+        include ../includes/ga

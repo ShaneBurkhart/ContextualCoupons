@@ -1,0 +1,17 @@
+extends ./layouts/focus-modal
+
+block variables
+   - var title = 'Page Not Found';
+
+block content
+    h1 Ooops...
+    p
+        span The page you are looking for doesn't exist.
+    p
+        span If you think this page should exist, email me at
+        a(href='mailto:shane@trysparkschool.com')  shane@trysparkschool.com.
+
+    p#page-not-found-options
+        a.button(href="/signup") Sign Up For Spark School
+        span or
+        a(href='/login') Login

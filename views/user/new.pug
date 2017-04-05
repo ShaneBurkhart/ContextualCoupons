@@ -1,0 +1,39 @@
+extends ../layouts/focus-modal
+
+block variables
+   - var title = 'Sign Up';
+
+block content
+    - user = user || {}
+    - type = type || 'twitter-clone'
+
+    if type === 'saas-course'
+        h1 Get The 6 Week Course
+        p Sign up now to get the course that teaches you how to build a subscription based SaaS web app.
+    else
+        h1 Twitter Clone Course
+        p Sign up to go from zero coding knowledge to building a Twitter clone from scratch in 7 days.
+
+    if error
+        p.error
+            i.fa.fa-warning
+            =error
+
+    form#signup-form(action='/user/' + type + '/create' method='POST')
+        .input-group.full-name-group
+            label(for='full-name') Full Name
+            input#full-name(type='text' name='full_name' placeholder='Ex. John Doe' value=user.full_name)
+        .input-group.email-group
+            label(for='email') Email
+            input#email(type='text' name='email' placeholder='user@domain.com' value=user.email)
+        .input-group.password-group
+            label(for='password') Password
+            input#password(type='password' name='password' placeholder='********')
+        if type === 'saas-course'
+            button Sign Up Now
+        else
+            button Get The FREE Course
+
+    #alternative-signup
+        p or
+        a(href='/login') Already have an account? Login

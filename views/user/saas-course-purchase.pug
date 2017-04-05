@@ -1,0 +1,117 @@
+extends ../layouts/focus-modal
+
+block variables
+   - var title = 'Purchase The Course';
+
+block head
+    script(
+        src='https://code.jquery.com/jquery-2.2.4.min.js'
+        integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44='
+        crossorigin='anonymous'
+    )
+    script(type='text/javascript' src='https://js.stripe.com/v2/')
+    script(type='text/javascript').
+        Stripe.setPublishableKey('#{stripePublicKey}');
+
+block content
+    h1 One last step...
+    p You're almost finished signing up!  Put in your credit card below to get the course on January 20th.
+
+    p.error(style="display: none;")
+
+    form(id='payment-form' action='/saas-course/purchase' method='POST')
+        p#purchase-price $#{price}
+            span One-time fee
+
+        .input-group.cc-group
+            label(for='cc-number') Credit Card
+            input(
+                type='text'
+                id='cc-number'
+                placeholder='4242'
+            )
+        div
+            .input-group.exp-month-group
+                label(for='exp-month') Month
+                select(id='exp-month')
+                    option(value='01') January (01)
+                    option(value='02') February (02)
+                    option(value='03') March (03)
+                    option(value='04') April (04)
+                    option(value='05') May (05)
+                    option(value='06') June (06)
+                    option(value='07') July (07)
+                    option(value='08') August (08)
+                    option(value='09') September (09)
+                    option(value='10') October (10)
+                    option(value='11') November (11)
+                    option(value='12') December (12)
+            .input-group.exp-year-group
+                label(for='exp-year') Year
+                select(id='exp-year')
+                    option(value='17') 2017
+                    option(value='18') 2018
+                    option(value='19') 2019
+                    option(value='20') 2020
+                    option(value='21') 2021
+                    option(value='22') 2022
+                    option(value='23') 2023
+            .input-group.cvc-group
+                label(for='cvc') CVC
+                input(type='password' id='cvc' placeholder="***")
+        button Purchase The Course
+
+    p.text-center.margin-small or
+
+    h3.text-center.margin-small Pay with PayPal
+
+    form.text-center(action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top")
+        input(type="hidden" name="cmd" value="_s-xclick")
+        input(type="hidden" name="hosted_button_id" value="4PP9ZZTL8V9XA")
+        input(type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!")
+        img(alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1")
+
+
+    script(type='text/javascript').
+      var $form = $('#payment-form');
+      var $submitButton = $form.find('button');
+      var $errorEl = $('p.error');
+      var $iconEl = $('<i class="fa fa-warning"></i>');
+
+      $form.submit(function(event) {
+        // Disable the submit button to prevent repeated clicks:
+        $submitButton.prop('disabled', true);
+
+        $errorEl.hide();
+
+        var card = {
+            number: $form.find('#cc-number').val(),
+            exp_month: $form.find('#exp-month').val(),
+            exp_year: $form.find('#exp-year').val(),
+            cvc: $form.find('#cvc').val(),
+        };
+
+        Stripe.card.createToken(card, function (status, result) {
+            var token = result.id;
+            var error = result.error;
+
+            if (error) {
+                $errorEl.html('');
+                $errorEl.append($iconEl);
+                $errorEl.append(error.message);
+                $errorEl.show();
+                $submitButton.prop('disabled', false);
+                return;
+            }
+
+            var $stripeTokenEl = $('<input type="hidden" name="stripeToken" />')
+            $stripeTokenEl.val(token);
+
+            $form.append($stripeTokenEl);
+            $form.get(0).submit();
+        });
+
+        // Prevent the form from being submitted
+        return false;
+      });
+

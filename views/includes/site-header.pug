@@ -1,0 +1,13 @@
+header
+    .container
+        nav.pull-left
+            a#site-logo(href="/") Spark School
+        nav#main-nav
+            block main_nav
+                if currentUser
+                    a.button(href="/courses") Courses
+                    form(action="/user/session/destroy" method="POST")
+                        button Logout
+                else
+                    a.button(href="/signup") Sign Up
+                    a(href="/login") Login

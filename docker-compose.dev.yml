@@ -1,0 +1,42 @@
+version: '2.1'
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile.app
+        links:
+            - db
+            - redis
+        volumes:
+            - .:/app
+        command: nodemon index.js
+        environment:
+            APP_ENV: development
+        env_file:
+            - ./secrets.dev.env
+
+    db:
+        image: postgres:9.6
+        environment:
+            POSTGRES_PASSWORD: password
+            POSTGRES_USER: sparkschool
+            POSTGRES_DB: sparkschool
+        volumes:
+            - ./tmp/db:/var/lib/postgresql/data
+        ports:
+            - 5432:5432
+
+    nginx:
+        build:
+            context: .
+            dockerfile: Dockerfile.nginx
+        ports:
+            - 8080:80
+        links:
+            - app
+        volumes:
+            - ./nginx.dev.conf:/etc/nginx/nginx.conf
+            - ./public:/public
+
+    redis:
+        image: redis:3.2

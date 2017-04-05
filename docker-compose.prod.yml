@@ -1,0 +1,41 @@
+version: '2.1'
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile.app
+        links:
+            - db
+            - redis
+        command: node index.js
+        environment:
+            APP_ENV: production
+        env_file:
+            - ./secrets.prod.env
+
+    db:
+        image: postgres:9.6
+        environment:
+            POSTGRES_PASSWORD: password
+            POSTGRES_USER: sparkschool
+            POSTGRES_DB: sparkschool
+        volumes:
+            - /data/db:/var/lib/postgresql/data
+        ports:
+            - 127.0.0.1:5432:5432
+
+    nginx:
+        build:
+            context: .
+            dockerfile: Dockerfile.nginx
+        ports:
+            - 80:80
+            - 443:443
+        links:
+            - app
+        volumes:
+            - /etc/nginx/ssl/trysparkschool_com-ssl-bundle.crt:/etc/nginx/ssl/trysparkschool_com-ssl-bundle.crt
+            - /etc/nginx/ssl/trysparkschool_com.key:/etc/nginx/ssl/trysparkschool_com.key
+
+    redis:
+        image: redis:3.2

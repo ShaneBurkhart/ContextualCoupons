@@ -1,0 +1,37 @@
+-
+    changeFreq: 'weekly'
+    priority: .8
+    urls:
+        '/':
+            images:
+                'https://s3.amazonaws.com/spark-school/me_and_yogi.png': 'Shane Burkhart and his dog Yogi.'
+        '/complete-guide-to-becoming-a-software-developer-without-a-college-degree':
+            images:
+                'https://s3.amazonaws.com/spark-school/me_and_yogi.png': 'Shane Burkhart and his dog Yogi.'
+
+-
+    changeFreq: 'weekly'
+    priority: .6
+    urls:
+        '/tutorials/build-and-deploy-nodejs-app-to-heroku/intro':
+        '/tutorials/build-and-deploy-nodejs-app-to-heroku/1':
+        '/tutorials/build-and-deploy-nodejs-app-to-heroku/2':
+            images:
+                'https://s3.amazonaws.com/spark-school/tutorials/nodejs-to-heroku/package-json-after-init.png': 'Initialize package.json with npm init command'
+        '/tutorials/build-and-deploy-nodejs-app-to-heroku/3':
+            images:
+                'https://s3.amazonaws.com/spark-school/tutorials/nodejs-to-heroku/server-client-http-request-diagram.jpg': 'Diagram of HTTP web request'
+        '/tutorials/build-and-deploy-nodejs-app-to-heroku/4':
+            images:
+                'https://s3.amazonaws.com/spark-school/tutorials/nodejs-to-heroku/no-home-page-html-error.png': 'Node.js failed to send home page HTML file'
+        '/tutorials/build-and-deploy-nodejs-app-to-heroku/5':
+            images:
+                'https://s3.amazonaws.com/spark-school/tutorials/nodejs-to-heroku/final-home-page.png': 'Home page for our Node.js web app'
+        '/tutorials/build-and-deploy-nodejs-app-to-heroku/6':
+            images:
+                'https://s3.amazonaws.com/spark-school/tutorials/nodejs-to-heroku/terminal-nodejs-version.png': 'Get Node.js version on the command line'
+                'https://s3.amazonaws.com/spark-school/tutorials/nodejs-to-heroku/heroku-running-nodejs-locally.png': 'Run our Node.js web app as Heroku on your local computer'
+        '/tutorials/build-and-deploy-nodejs-app-to-heroku/7':
+        '/tutorials/build-and-deploy-nodejs-app-to-heroku/8':
+            images:
+                'https://s3.amazonaws.com/spark-school/tutorials/nodejs-to-heroku/heroku-create-url.png': 'Create Heroku server for our Node.js web app.'

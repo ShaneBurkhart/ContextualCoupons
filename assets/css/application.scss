@@ -1,0 +1,57 @@
+@import "font-awesome.min";
+@import "syntax";
+@import "generic";
+@import "landing-page";
+@import "focus-modal";
+@import "course";
+
+#application {
+    @import "main-nav";
+
+    .hero {
+        background-color: #f7f7f7;
+        padding: 35px 0px 25px;
+        border-bottom: 1px solid #eeeeee;
+
+        h1 {
+            margin-bottom: 0px;
+            font-weight: 700;
+        }
+
+        p {
+            color: #555555;
+            font-size: 14px;
+        }
+    }
+
+    .course-listing {
+        padding: 20px 0px;
+        border-bottom: 1px solid #eeeeee;
+
+        h2 {
+            margin-bottom: 5px;
+        }
+
+        p {
+            color: #222222;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        p.technologies {
+            color: #aaaaaa;
+            margin-bottom: 5px;
+        }
+
+        ul {
+            margin-bottom: 0px;
+            padding-left: 0px;
+            list-style: none;
+            font-size: 14px;
+
+            li {
+                margin-bottom: 10px;
+            }
+        }
+    }
+}

@@ -1,0 +1,159 @@
+#course {
+    padding: 65px 0px;
+
+    h2 {
+        color: #002A3D;
+        padding-top: 35px;
+        font-weight: bold;
+    }
+
+    h3 {
+        color: #002A3D;
+        font-weight: bold;
+    }
+
+    h4 {
+        color: #002A3D;
+        font-weight: bold;
+    }
+
+    // Used to annotate code blocks
+    h5 {
+        margin-bottom: 5px;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .highlight {
+        border: 1px solid #303f45;
+        border-radius: 3px;
+        margin-bottom: 25px;
+        -webkit-print-color-adjust: exact;
+
+        pre {
+            padding: 14px;
+            margin: 0;
+            overflow-x: auto;
+        }
+    }
+
+    .next-lesson {
+        text-align: center;
+        width: 75%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 50px;
+        padding-top: 10px;
+    }
+
+    .content-upgrade {
+        text-align: center;
+        width: 60%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 35px;
+        padding-top: 10px;
+    }
+
+    .meet-the-author {
+        background-color: #f6f6f6;
+        margin-bottom: 25px;
+        padding: 25px;
+        border: 1px solid #eaeaea;
+        border-radius: 3px;
+        white-space: nowrap;
+        overflow: hidden;
+
+        & > * {
+            vertical-align: top;
+            display: inline-block;
+            white-space: normal;
+        }
+
+        .graphic {
+            width: 31%;
+            margin-right: 4%;
+
+            & .circle {
+                border: 1px solid #eaeaea;
+                border-radius: 50%;
+            }
+        }
+
+        .description {
+            width: 65%;
+
+            & > * {
+                margin-bottom: 10px;
+            }
+
+            h3 {
+                padding: 0px;
+            }
+
+            p {
+                font-size: 16px;
+            }
+        }
+    }
+
+    .next-lesson-button {
+        color: #ffffff;
+        background-color: #004056;
+        margin-top: 40px;
+        padding: 14px;
+        display: block;
+    }
+
+    article img {
+        max-width: 100%;
+    }
+
+    #section-name {
+        color: #c3ccd0;
+        font-size: 16px;
+        display: inline-block;
+        width: 70%;
+        margin: 14px 0px 0px;
+        text-align: right;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        float: right;
+    }
+
+    #all-courses {
+        color: #555555;
+        display: block;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        i {
+            margin-right: 7px;
+        }
+    }
+
+    #main-nav {
+        display: inline-block;
+        height: 22px;
+        margin: 15px 0px 0px;
+        overflow: hidden;
+        white-space: nowrap;
+        float: left;
+    }
+
+    @media only screen and (max-width : 750px) {
+        .meet-the-author {
+            * {
+                display: block !important;
+                width: 100% !important;
+                margin-bottom: 25px;
+            }
+        }
+
+        #main-nav {
+            width: 30%;
+        }
+    }
+}

@@ -1,0 +1,88 @@
+#focus-modal {
+    background-image: url("/assets/images/geometry.png");
+
+    main {
+        background-color: #ffffff;
+        width: 500px;
+        margin: 0px auto;
+        border: 1px solid #eeeeee;
+        box-shadow: 1px 1px 1px #cccccc;
+    }
+
+    .container {
+        width: auto;
+        padding: 40px;
+    }
+
+    .margin-small {
+        margin-bottom: 10px;
+    }
+
+    h1 {
+        margin-bottom: 15px;
+    }
+
+    p {
+        color: #555555;
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    p.error {
+        color: #ffffff;
+        background-color: #d24747;
+        padding: 8px 15px;
+        font-size: 14px;
+
+        i {
+            margin-right: 15px;
+        }
+    }
+
+    #purchase-price {
+        color: #292929;
+        padding: 0px 0px 0px;
+        font-size: 38px;
+        font-weight: 700;
+        font-family: "Lato";
+        text-align: center;
+        line-height: 1;
+
+        span {
+            font-size: 20px;
+            margin-left: 10px;
+        }
+    }
+
+    #page-not-found-options {
+        & > * {
+            margin-right: 20px;
+        }
+    }
+
+    #alternative-signup {
+        text-align: center;
+
+        p {
+            margin-bottom: 8px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    }
+
+    #signup-form, #login-form {
+        width: 300px;
+        margin: 0px auto;
+
+        button {
+            width: 100%;
+            display: block;
+        }
+    }
+
+    #payment-form {
+        width: 300px;
+    }
+}
