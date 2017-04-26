@@ -7,8 +7,7 @@ var RedisStore = require('connect-redis')(session);
 var express = require('express');
 var app = express();
 var redisStore = new RedisStore({
-  host: 'redis',
-  port: 6379,
+  client: require('./db/redis'),
 });
 
 var db = require('./db/db');
@@ -19,7 +18,7 @@ app.engine('html', require('pug').renderFile);
 app.set('views', './views');
 app.set('view engine', 'pug');
 
-app.use(require('./middleware/redirects'));
+//app.use(require('./middleware/redirects'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
@@ -30,9 +29,9 @@ app.use(session({
   saveUninitialized: false,
 }));
 
-app.use(require('./middleware/user'));
+//app.use(require('./middleware/user'));
 // These needs to be last to make sure variables are set.
-app.use(require('./middleware/template-vars'));
+//app.use(require('./middleware/template-vars'));
 
 addControllers(app);
 
