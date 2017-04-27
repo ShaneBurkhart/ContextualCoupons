@@ -19,8 +19,8 @@ services:
         image: postgres:9.6
         environment:
             POSTGRES_PASSWORD: password
-            POSTGRES_USER: paymentsapp
-            POSTGRES_DB: paymentsapp
+            POSTGRES_USER: couponsapp
+            POSTGRES_DB: couponsapp
         volumes:
             - ./tmp/db:/var/lib/postgresql/data
         ports:

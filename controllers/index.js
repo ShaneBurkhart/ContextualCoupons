@@ -1,7 +1,8 @@
 'use strict'
 
 module.exports = function (app) {
-  require('./auth.js')(app);
+  require('./shopify-auth')(app);
+  require('./mailchimp-auth')(app);
   //require('./user.js')(app);
   //require('./dashboard.js')(app);
   // MAKE SURE THE HOME CONTROLLER GETS ADDED LAST!

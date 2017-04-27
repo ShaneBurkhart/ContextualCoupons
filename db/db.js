@@ -2,10 +2,10 @@
 
 var pg = require('pg');
 var pool = new pg.Pool({
-  user: 'paymentsapp',
+  user: 'couponsapp',
   password: 'password',
   host: 'db',
-  database: 'paymentsapp',
+  database: 'couponsapp',
   max: 10, // max number of clients in pool
   idleTimeoutMillis: 1000, // close & remove clients which have been idle > 1 second
 });

@@ -2,11 +2,14 @@
 
 var SHOPIFY_SCOPE = 'write_content';
 var SHOPIFY_AUTH_REDIRECT_URI = 'http://127.0.0.1:8080/contextual-coupon/auth/callback';
+var SHOPIFY_SHOP_COOKIE = 'shopify_shop';
 
 var uuidV4 = require('uuid/v4');
 var shopifyAPI = require('shopify-node-api');
 
 var redis = require('../db/redis');
+
+var ShopifyShop = require('../models/shopify-shop');
 
 function getNonce(shop, callback) {
   if (!shop) callback('No shop supplied.');
@@ -31,11 +34,6 @@ function getShopifyInstance(req, callback) {
   getNonce(shop, function (err, nonce) {
     if (err) return callback(err);
 
-    console.log(shop);
-    console.log(nonce);
-    console.log(process.env.SHOPIFY_API_KEY);
-    console.log(process.env.SHOPIFY_SECRET_KEY);
-
     var shopifyClient = new shopifyAPI({
       shop: shop,
       shopify_api_key: process.env.SHOPIFY_API_KEY,
@@ -58,6 +56,7 @@ module.exports = function (app) {
 
   app.get('/contextual-coupon/auth/callback', function (req, res) {
     var queryParams = req.query;
+    var shop = queryParams.shop || '';
 
     getShopifyInstance(req, function (err, client) {
       if (err)  {
@@ -77,7 +76,16 @@ module.exports = function (app) {
           return res.send("Not authentic.");
         }
 
-        res.send(accessToken);
+        ShopifyShop.create(shop, accessToken, function (err) {
+          if (err) {
+            console.log(err);
+              // TODO redirect to an unauthorized page
+            return res.send(err);
+          }
+
+          req.session.shop = shop;
+          res.redirect('/mailchimp/auth');
+        });
       });
     });
   });
