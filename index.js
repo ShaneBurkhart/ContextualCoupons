@@ -29,7 +29,7 @@ app.use(session({
   saveUninitialized: false,
 }));
 
-//app.use(require('./middleware/user'));
+app.use(require('./middleware/shop'));
 // These needs to be last to make sure variables are set.
 //app.use(require('./middleware/template-vars'));
 

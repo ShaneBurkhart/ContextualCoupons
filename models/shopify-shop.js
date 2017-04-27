@@ -2,7 +2,7 @@
 
 var db = require('../db/db');
 
-var FIND_BY_SHOP_QUERY= 'SELECT * FROM ShopifyShops WHERE id = $1';
+var FIND_BY_SHOP_QUERY= 'SELECT * FROM ShopifyShops WHERE shop = $1';
 
 var INSERT_QUERY = [
   'INSERT INTO ShopifyShops (',
@@ -12,8 +12,9 @@ var INSERT_QUERY = [
 
 var ADD_MAILCHIMP_TOKEN_QUERY = [
   'UPDATE ShopifyShops',
-  'SET mailchimp_access_token = $1',
-  'WHERE shop = $2;',
+  'SET mailchimp_access_token = $1,',
+  'mailchimp_api_endpoint = $2',
+  'WHERE shop = $3;',
 ].join(' ');
 
 var ShopifyShop = {
@@ -31,8 +32,8 @@ var ShopifyShop = {
     });
   },
 
-  addMailchimpAccessToken: function (shop, accessToken, callback) {
-    db.query(ADD_MAILCHIMP_TOKEN_QUERY, [shop, accessToken], function (err) {
+  addMailchimpAccessToken: function (shop, accessToken, apiEndpoint, callback) {
+    db.query(ADD_MAILCHIMP_TOKEN_QUERY, [accessToken, apiEndpoint, shop], function (err) {
       if (err) return callback('Sorry, there was an error. Try again later.');
       callback(undefined);
     });

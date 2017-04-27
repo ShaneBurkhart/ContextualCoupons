@@ -3,6 +3,8 @@
 module.exports = function (app) {
   require('./shopify-auth')(app);
   require('./mailchimp-auth')(app);
+  require('./dashboard')(app);
+  require('./mailchimp-webhooks')(app);
   //require('./user.js')(app);
   //require('./dashboard.js')(app);
   // MAKE SURE THE HOME CONTROLLER GETS ADDED LAST!
