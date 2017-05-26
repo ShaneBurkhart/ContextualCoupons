@@ -1,13 +1,14 @@
-extends ../layouts/focus-modal
+extends ../layouts/dashboard
 
 block variables
    - var title = 'Connect Your Mailchimp Account';
 
 block content
-    h1.text-center Let's connect your Mailchimp account.
+    .small-container
+        h1 Let's connect your Mailchimp account.
 
-    p The first thing you need to do is connect your Mailchimp account so we can add shopify discount codes to your subscribers.
-    p You'll pick which subscribers to add coupon codes to in the next step.
+        p The first thing you need to do is connect your Mailchimp account so we can add shopify discount codes to your subscribers.
+        p You'll pick which subscribers to add coupon codes to in the next step.
 
-    p.text-center
-        a.button(href="" + mailchimpOAuthURL) Connect Your Mailchimp Account
+        p.text-center
+            a.button(href="" + mailchimpOAuthURL) Connect Your Mailchimp Account

@@ -1,0 +1,66 @@
+extends ../layouts/focus-modal
+
+block variables
+   - var title = 'Create A Discount';
+
+block content
+    - discount = discount || {};
+    - discount.attrErrors = discount.attrErrors || {};
+
+    h1.text-center Create A Discount
+
+    p
+        | When a user subscribes to your list, we'll add a discount code as a
+        a(href="https://mailchimp.com/features/merge-tags/")  merge tag
+        |  so you can include it in your emails.
+
+    p We'll watch emails that are sent to subscribers in your list and add an expiring discount code to Shopify when we find one.
+
+    p Simply define how you want your discount to behave and we'll do the rest :)
+
+    if err
+        p.error= err
+
+    form(action="/dashboard/discounts/create" method="POST")
+        .input-group
+            label Discount Name
+            if discount.attrErrors.name
+                p.error= discount.attrErrors.name
+            input(type="text" name="name" value=discount.name)
+
+        .input-group
+            label Discount Type
+            if discount.attrErrors.type
+                p.error= discount.attrErrors.type
+            select(name="type" value=discount.type)
+                option(value="fixed_amount") Fixed Amount ($)
+                option(value="percentage") Percentage
+                option(value="shipping") Shipping
+
+        .input-group
+            label Discount Value
+            if discount.attrErrors.value
+                p.error= discount.attrErrors.value
+            input(type="text" name="value" value=discount.value)
+
+        .input-group
+            label Discount Duration After Sending In Email
+            if discount.attrErrors.duration
+                p.error= discount.attrErrors.duration
+            select(name="duration" value=discount.duration)
+                - for(var i = 1; i < 100; i++)
+                    if i == 1
+                        option(value="" + i) 24 Hours
+                    else
+                        option(value="" + i)= i + " Days"
+
+        .input-group
+            label Mailchimp List To Apply Discount
+            if discount.attrErrors.mailchimp_list_id
+                p.error= discount.attrErrors.mailchimp_list_id
+            select(name="mailchimp_list_id" value=discount.mailchimp_list_id)
+                each list in mailchimpLists
+                    option(value="" + list.id)= list.name
+
+        p.text-center(style="margin-bottom: 0;")
+            button Create Discount

@@ -1,0 +1,133 @@
+extends ../layouts/dashboard
+
+block variables
+   - var title = 'Discount Secret Agent';
+
+block content
+    - discount = discount || {};
+    - discount.attrErrors = discount.attrErrors || {};
+
+    .small-container
+        h1 Self-Destructing Discount
+        p Each new Mailchimp subscriber will have an expiring discount code added as a merge tag on the subscriber.  Once the discount is added, we'll trigger your automation for you. Like magic!
+
+        form(action="/dashboard/discount/save" method="POST")
+            .step
+                h4
+                    b Step 1:
+                    |  Give your discount a name.
+                p This won't be shown to users.
+
+                .input-group
+                    label Discount Name
+                    if discount.attrErrors.name
+                        p.error= discount.attrErrors.name
+                    input(type="text" name="name" value=discount.name)
+
+            .step
+                h4
+                    b Step 2:
+                    |  Choose your discount amount.
+
+                .two-thirds
+                    .input-group
+                        label Discount Type
+                        if discount.attrErrors.type
+                            p.error= discount.attrErrors.type
+                        select(name="type" value=discount.type)
+                            option(value="fixed_amount") Fixed Amount ($)
+                            option(value="percentage") Percentage (%)
+                            option(value="shipping") Free Shipping (Orders over $)
+
+                .third
+                    .input-group
+                        label Discount Value
+                        if discount.attrErrors.value
+                            p.error= discount.attrErrors.value
+                        input(type="text" name="value" value=discount.value)
+
+            .step
+                h4
+                    b Step 3:
+                    |  Select your discount duration.
+                p This is the time your discount will discount will expire after a new subscriber is added.
+
+                .input-group
+                    label Discount Duration After Sending Discount
+                    if discount.attrErrors.duration
+                        p.error= discount.attrErrors.duration
+                    select(name="duration" value=discount.duration)
+                        - for(var i = 1; i < 100; i++)
+                            if i == 1
+                                option(value="" + i) 24 Hours
+                            else
+                                option(value="" + i)= i + " Days"
+
+            .step
+                h4
+                    b Step 4:
+                    |  Choose the Mailchimp list to watch.
+                p Each new subscriber added to this list will have a discount code added as a merge tag.
+
+                .input-group
+                    label Mailchimp List To Apply Discount
+                    if discount.attrErrors.mailchimp_list_id
+                        p.error= discount.attrErrors.mailchimp_list_id
+                    select(name="mailchimp_list_id" id="mailchimp_list_id" value=discount.mailchimp_list_id)
+                        each list in mailchimpLists
+                            option(value="" + list.id)= list.name
+
+            .step
+                h4
+                    b Step 5:
+                    |  Choose the Mailchimp automation to trigger.
+                p Once a discount code is added to a subscriber, we'll trigger an automation.  You'll need to configure the automation trigger to be API 3.0 before your discount codes will be added.
+
+                .input-group
+                    label Mailchimp Automation To Trigger
+                    if discount.attrErrors.mailchimp_automation_id
+                        p.error= discount.attrErrors.mailchimp_automation_id
+
+                    - listId = discount.mailchimp_list_id || (mailchimpLists[0] || {}).id;
+                    - automations = mailchimpAutomationsByListId[listId] || [];
+
+                    select(name="mailchimp_automation_id" id="mailchimp_automation_id" value=discount.mailchimp_automation_id)
+                        if !automations.length
+                            option No automations for this list
+                        else
+                            each automation in automations
+                                option(value="" + automation.id)= automation.title
+
+            .small-container
+                .full
+                    p.text-center(style="margin-bottom: 0;")
+                        button Save Discount
+
+        script
+            - var automationsOutput = JSON.stringify(mailchimpAutomationsByListId) || {};
+            .
+                $(document).ready(function () {
+                    var automations =
+            |  !{automationsOutput}
+            .
+                    ;
+
+                    var $mailchimpAutomationId = $('#mailchimp_automation_id');
+
+                    $('#mailchimp_list_id').change(function (e) {
+                        var listId = e.target.value;
+                        var automationsForList = automations[listId] || [];
+
+                        $mailchimpAutomationId.empty();
+                        var $newOptions = $.map(automationsForList, function (automation) {
+                            return "<option value='" + automation.id + "'>" + automation.title + "</option>";
+                        });
+
+                        if (!$newOptions.length) {
+                            $newOptions = ["<option>No automations for this list</option>"]
+                        }
+
+                        $mailchimpAutomationId.append($newOptions);
+                    });
+                });
+

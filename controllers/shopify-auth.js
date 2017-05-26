@@ -20,47 +20,41 @@ function setShop(req, shop) {
 
 module.exports = function (app) {
   app.get('/contextual-coupon/install', function (req, res) {
-    var shop = req.query.shop;
+    var shopSlug = ShopifyUtil.getSlug(req.query.shop);
+    var shop = req.shop;
 
-    ShopifyUtil.isValidSignature(req, function (err) {
-      if (err) return res.render(err);
+    // Already logged in as this shop.
+    if (shop && shop.slug == shopSlug) {
+      // Ensure the session var is set.
+      setShop(req, shopSlug);
 
-      // Check if shop exists
-      ShopifyShop.findByShop(shop, function (err, shopifyShop) {
-        if (err) return res.render(err);
+      if (!shop.mailchimp_access_token) {
+        // Shop authorized but not with Mailchimp
+        // Go ahead and set shop to log in
+        return res.redirect('/mailchimp/auth');
+      } else {
+        // Logged in and set up.
+        return res.redirect('/dashboard');
+      }
+    }
 
-        if (!shopifyShop) {
-          // No shop so authorize shop with shopify
-          // Unset shop since we are authorizing a new one
-          unsetShop(req)
+    // Make sure to clear the session
+    unsetShop(req);
 
-          ShopifyUtil.getClientWithNonce(shop, function (err, client) {
-            if (err) return res.render(err);
-            res.redirect(client.buildAuthURL());
-          });
-        } else if (!shopifyShop.mailchimp_access_token) {
-          // Shop authorized but not with Mailchimp
-          // Go ahead and set shop to log in
-          setShop(req, shop);
-          res.redirect('/mailchimp/auth');
-        } else {
-          // Authorized with shopify and mailchimp
-          // Login and redirect to dashboard
-          setShop(req, shop);
-          res.redirect('/dashboard');
-        }
-      });
+    ShopifyUtil.getClientWithNonce(shopSlug, function (err, client) {
+      if (err) return res.send(err);
+      return res.redirect(client.buildAuthURL());
     });
   });
 
   app.get('/contextual-coupon/auth/callback', function (req, res) {
     var queryParams = req.query;
-    var shop = queryParams.shop;
+    var shopSlug = ShopifyUtil.getSlug(queryParams.shop);
 
-    ShopifyUtil.getClientWithNonce(shop, function (err, client) {
+    ShopifyUtil.getClientWithNonce(shopSlug, function (err, client) {
       if (err)  {
         console.log(err);
-          // TODO redirect to an unauthorized page
+        // TODO redirect to an unauthorized page
         return res.send(err);
       }
 
@@ -69,16 +63,24 @@ module.exports = function (app) {
         var accessToken = authData['access_token'];
 
         if (err) {
+          console.log(err);
           // Unauthorized access. Not from Shopify more than likely.
           return res.send(err);
         }
 
-        ShopifyShop.create(shop, accessToken, function (err) {
+        ShopifyShop.upsert(shopSlug, accessToken, function (err, shopId) {
           if (err) return res.send(err);
 
-          // Login and redirect to mailchimp auth
-          setShop(req, shop);
-          res.redirect('/mailchimp/auth');
+          // Login shop
+          setShop(req, shopSlug);
+
+          ShopifyShop.findBySlug(shopSlug, function (err, shop) {
+            if (!shop.mailchimp_access_token) {
+              return res.redirect('/mailchimp/auth');
+            } else {
+              return res.redirect('/dashboard');
+            }
+          });
         });
       });
     });

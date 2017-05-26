@@ -11,7 +11,7 @@ body, html{
 
 body {
     min-height: 100%;
-    padding: 50px 0px 0px;
+    padding: 50px 0px;
     box-sizing: border-box;
 }
 
@@ -54,23 +54,6 @@ iframe.hidden {
         color: #0295ca;
     }
 }
-
-.container {
-    margin: 0px auto;
-    width: 700px;
-    white-space: nowrap;
-    overflow: hidden;
-
-    & > * {
-        white-space: normal;
-    }
-}
-
-.small-container {
-    margin: 0px auto;
-    width: 500px;
-}
-
 
 h1, h2, h3, h4, h5, h6 {
     font-family: "Lato";
@@ -133,8 +116,12 @@ p {
     }
 }
 
-a, a:hover {
+a {
     text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 h1, h2, h3, h4, h5, h6, p, span, a {
@@ -226,7 +213,7 @@ ul {
 }
 
 .input-group {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 
     * {
         display: block;
@@ -237,6 +224,13 @@ ul {
         color: #606060;
         padding-bottom: 3px;
         font-size: 14px;
+    }
+
+    p.error {
+        color: #d24747;
+        background-color: transparent;
+        padding: 0;
+        margin-bottom: 0 !important;
     }
 
     input, select {
@@ -268,6 +262,10 @@ ul {
 
     &:hover {
         background-color: #013b50;
+    }
+
+    &.small {
+        padding: 8px 18px;
     }
 
     &.block {
@@ -304,6 +302,28 @@ ul {
 
 }
 
+table, thead, tbody, tr {
+    width: 100%;
+    border-spacing: 0;
+
+    th {
+        font-weight: bold;
+        border-collapse: collapse;
+        text-align: left;
+    }
+
+    td, th {
+        border-bottom: 1px solid #d9d9d9;
+        padding-right: 25px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        &:last-child {
+            padding-right: 0;
+        }
+    }
+}
+
 .text-center {
     text-align: center;
 }
@@ -313,11 +333,4 @@ ul {
   height: 25px;
   margin-top: -50px;
   visibility: hidden;
-}
-
-@media only screen and (max-width : 750px) {
-
-  .small-container, .container{
-    width: 95%;
-  }
 }

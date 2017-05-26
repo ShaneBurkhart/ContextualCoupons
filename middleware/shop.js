@@ -7,7 +7,7 @@ module.exports = function (req, res, next) {
 
   if (!shopName) return next();
 
-  ShopifyShop.findByShop(shopName, function (err, shop) {
+  ShopifyShop.findBySlug(shopName, function (err, shop) {
     if (!shop) return next();
 
     // Add to request so we can access in controllers.

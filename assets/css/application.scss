@@ -1,57 +1,76 @@
 @import "font-awesome.min";
-@import "syntax";
 @import "generic";
-@import "landing-page";
-@import "focus-modal";
-@import "course";
 
-#application {
-    @import "main-nav";
+.small-container {
+    margin: 0 auto;
+    width: 500px;
+}
 
-    .hero {
-        background-color: #f7f7f7;
-        padding: 35px 0px 25px;
-        border-bottom: 1px solid #eeeeee;
+.step {
+    margin-bottom: 40px;
 
-        h1 {
-            margin-bottom: 0px;
-            font-weight: 700;
-        }
+    h4 {
+        margin-bottom: 12px;
+    }
 
-        p {
-            color: #555555;
-            font-size: 14px;
+    p {
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+
+    &:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+
+
+    & > .half {
+        width: 47%;
+        margin-right: 6%;
+
+        &.divider:after {
+            background-color: #eaeaea;
+            content: '';
+            display: block;
+            position: absolute;
+            width: 1px;
+            height: 100%;
+            right: -6%;
+            top: 0;
+            bottom: 0;
         }
     }
 
-    .course-listing {
-        padding: 20px 0px;
-        border-bottom: 1px solid #eeeeee;
+    & > .two-thirds {
+        width: 65.2%;
+    }
 
-        h2 {
-            margin-bottom: 5px;
-        }
+    & > .third {
+        width: 30.6%;
+    }
 
-        p {
-            color: #222222;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
+    & > .half, & > .third, & > .two-thirds {
+        position: relative;
+        vertical-align: top;
+        display: inline-block;
+        float: left;
+        margin-right: 4%;
 
-        p.technologies {
-            color: #aaaaaa;
-            margin-bottom: 5px;
-        }
+        &:last-child {
+            margin-right: 0px;
 
-        ul {
-            margin-bottom: 0px;
-            padding-left: 0px;
-            list-style: none;
-            font-size: 14px;
-
-            li {
-                margin-bottom: 10px;
+            &.divider:after {
+                content: none;
+                display: none;
             }
         }
+    }
+}
+
+@media only screen and (max-width : 500px) {
+    .small-container {
+        width: 100%;
+        padding: 0px 3%;
     }
 }

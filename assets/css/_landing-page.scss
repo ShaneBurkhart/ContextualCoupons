@@ -5,15 +5,6 @@
         padding-top: 0px;
     }
 
-    .container {
-        width: 900px;
-    }
-
-    // Don't keep this pattern.  Move to a generic set of container sizes.
-    .small-container {
-        width: 700px;
-    }
-
     .hero {
         position: relative;
         height: 350px;
@@ -176,46 +167,6 @@
             }
         }
 
-        .container {
-            & > * {
-                vertical-align: top;
-                display: inline-block;
-                margin-right: 4%;
-
-                &:last-child {
-                    margin-right: 0px;
-                }
-
-                & > *:last-child {
-                    margin-bottom: 0px;
-                }
-            }
-
-            & > .full {
-                width: 100%;
-            }
-
-            & > .half {
-                width: 48%;
-            }
-
-            & > .description {
-                width: 55%;
-            }
-
-            & > .graphic {
-                width: 41%;
-
-                img {
-                    width: 100%;
-                }
-
-                & .rounded {
-                    border-radius: 3px;
-                }
-            }
-        }
-
         .bullet-points {
             background-color: #f6f6f6;
             border: 1px solid #eaeaea;
@@ -329,20 +280,6 @@
     @media only screen and (max-width : 850px) {
         .hero {
             height: 400px;
-        }
-
-        .container {
-            width: 95%;
-        }
-
-        .section {
-            padding: 60px 0px;
-
-            & .container > * {
-                display: block !important;
-                width: 100% !important;
-                margin-bottom: 25px;
-            }
         }
     }
 

@@ -1,0 +1,170 @@
+.section {
+    position: relative;
+    padding: 80px 0px;
+    border-bottom: 1px solid #eaeaea;
+
+    &.no-border {
+        border: none;
+    }
+
+    &.white {
+        background-color: #ffffff;
+    }
+
+    &.dark-gray {
+        background-color: #5e574f;
+    }
+
+    &.light-gray {
+        background-color: #f6f6f6;
+    }
+
+    &.tera {
+        padding: 160px 0px;
+    }
+
+    &.giga {
+        padding: 140px 0px;
+    }
+
+    &.mega {
+        padding: 120px 0px;
+    }
+
+    &.kilo {
+        padding: 100px 0px;
+    }
+
+    /* 80px is default */
+
+    &.small {
+        padding: 60px 0px;
+    }
+
+    &.tiny {
+        padding: 40px 0px;
+    }
+
+    &.micro {
+        padding: 20px 0px;
+    }
+
+    &.no-padding {
+        padding: 0px 0px;
+    }
+
+    .fluid-container {
+        width: 100%;
+        padding: 0px 3%;
+    }
+
+    .full-container {
+        width: 100%;
+    }
+
+    .large-container {
+        width: 1000px;
+    }
+
+    .container {
+        width: 800px;
+    }
+
+    .small-container {
+        width: 500px;
+    }
+
+    .fluid-container, .full-container, .large-container, .container, .small-container {
+        margin: 0px auto;
+
+        &:after {
+            content: '';
+            display: table;
+            clear: both;
+        }
+
+        & > .full {
+            width: 100%;
+        }
+
+        & > .half {
+            width: 47%;
+            margin-right: 6%;
+
+            &.divider:after {
+                background-color: #eaeaea;
+                content: '';
+                display: block;
+                position: absolute;
+                width: 1px;
+                height: 100%;
+                right: -6%;
+                top: 0;
+                bottom: 0;
+            }
+        }
+
+        & > .two-thirds {
+            width: 65.2%;
+        }
+
+        & > .third {
+            width: 30.6%;
+        }
+
+        & > .fourth {
+            width: 22%;
+        }
+
+        & > .fifth {
+            width: 16.5%;
+        }
+
+        & > .description {
+            width: 46%;
+
+            h1, h2, h3, h4, p {
+                margin-bottom: 10px;
+                padding-bottom: 0px;
+            }
+        }
+
+        & > .graphic {
+            width: 50%;
+
+            &.background {
+                height: 100%;
+                background-repeat: no-repeat;
+                background-position: center center;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+            }
+        }
+
+        & > * {
+            position: relative;
+            vertical-align: top;
+            display: inline-block;
+            float: left;
+            margin-right: 4%;
+
+            &:last-child {
+                margin-right: 0px;
+
+                &.divider:after {
+                    content: none;
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width : 1000px) {
+    .section .large-container {
+        width: 100%;
+        padding: 0px 3%;
+    }
+}

@@ -10,6 +10,8 @@ var redis = require('../db/redis');
 
 var ShopifyUtil = {
   getClient: function (shop, callback) {
+    if (!shop) return callback('No shop specified.');
+
     var shopifyClient = new shopifyAPI({
       shop: shop,
       shopify_api_key: process.env.SHOPIFY_API_KEY,
@@ -24,6 +26,7 @@ var ShopifyUtil = {
   getClientWithNonce: function (shop, callback) {
     ShopifyUtil.getNonce(shop, function (err, nonce) {
       if (err) return callback(err);
+      console.log(nonce);
 
       var shopifyClient = new shopifyAPI({
         shop: shop,
@@ -40,7 +43,7 @@ var ShopifyUtil = {
 
   getNonce: function (shop, callback) {
     if (!shop) return callback('No shop provided.');
-    var redisKey = 'oauth-nonces:' + shop;
+    var redisKey = 'oauth-nonces:' + ShopifyUtil.getSlug(shop);
 
     redis.get(redisKey, function (err, reply) {
       if (err) return callback(err);
@@ -69,6 +72,11 @@ var ShopifyUtil = {
 
       callback();
     });
+  },
+
+  getSlug: function (shopName) {
+    if (!shopName) return undefined;
+    return shopName.split('.')[0];
   }
 };
 
